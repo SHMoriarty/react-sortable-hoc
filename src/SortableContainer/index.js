@@ -190,7 +190,7 @@ export default function sortableContainer(WrappedComponent, config = {withRef: f
         if (!distance) {
           if (this.props.pressDelay === 0) {
             this.handlePress(event);
-          } else {
+          } else if (!this.pressTimer) {
             this.pressTimer = setTimeout(
               () => this.handlePress(event),
               this.props.pressDelay
@@ -242,6 +242,7 @@ export default function sortableContainer(WrappedComponent, config = {withRef: f
     };
 
     handlePress = event => {
+      this.pressTimer = null;
       const active = this.manager.getActive();
 
       if (active) {
